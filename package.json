@@ -6,7 +6,8 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "devStart": "nodemon index.js"
+    "devStart": "nodemon bot.js",
+    "prodStart": "node bot.js"
   },
   "author": "",
   "license": "ISC",
