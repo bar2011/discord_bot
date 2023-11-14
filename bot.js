@@ -21,8 +21,8 @@ client.login(process.env.TOKEN);
 client.on(Events.InteractionCreate, async (interaction) => {
 	if (!interaction.isCommand()) return;
 	switch (interaction.commandName) {
-		case "hello":
-			await hello.execute(interaction);
-			break;
+	case "hello":
+		await hello.execute(interaction);
+		break;
 	}
 });
