@@ -9,6 +9,7 @@ const client = new Client({
 	intents: [GatewayIntentBits.Guilds],
 });
 
+client.cooldowns = new Collection();
 client.commands = new Collection();
 
 // Get command files and add to collection
