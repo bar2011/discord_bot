@@ -1,21 +1,26 @@
 import * as fs from "fs";
+import * as path from "path";
 import { Events } from "discord.js";
 
 export async function handleCommands(client) {
 	// Get command files and add to collection
-	const commandFiles = fs
-		.readdirSync("./commands")
-		.filter((file) => file.endsWith(".js"));
+	const commandFolders = fs.readdirSync("./commands");
 
-	for (const file of commandFiles) {
-		const command = await import(`./commands/${file}`);
-		// Set a new item in the Collection with the key as the command name and the value as the exported module
-		if ("data" in command && "execute" in command) {
-			client.commands.set(command.data.name, command);
-		} else {
-			console.log(
-				`[WARNING] The command at ./commands/${file} is missing a required "data" or "execute" property.`,
-			);
+	for (const folder of commandFolders) {
+		const commandsPath = path.join("./commands", folder);
+		const commandFiles = fs
+			.readdirSync(commandsPath)
+			.filter((file) => file.endsWith(".js"));
+		for (const file of commandFiles) {
+			const command = await import(`./commands/${folder}/${file}`);
+			// Set a new item in the Collection with the key as the command name and the value as the exported module
+			if ("data" in command && "execute" in command) {
+				client.commands.set(command.data.name, command);
+			} else {
+				console.log(
+					`[WARNING] The command at ./commands/${folder}/${file} is missing a required "data" or "execute" property.`
+				);
+			}
 		}
 	}
 
@@ -23,12 +28,12 @@ export async function handleCommands(client) {
 		if (!interaction.isChatInputCommand()) return;
 
 		const command = interaction.client.commands.get(
-			interaction.commandName,
+			interaction.commandName
 		);
 
 		if (!command) {
 			console.error(
-				`No command matching ${interaction.commandName} was found.`,
+				`No command matching ${interaction.commandName} was found.`
 			);
 			return;
 		}

@@ -1,4 +1,3 @@
-import { deploy } from "./deploy-commands.js";
 import { handleCommands } from "./handle-commands.js";
 import { Client, Collection, Events, GatewayIntentBits } from "discord.js";
 import { config } from "dotenv";
@@ -18,5 +17,3 @@ client.login(process.env.TOKEN);
 client.commands = new Collection();
 
 await handleCommands(client);
-
-await deploy();
