@@ -1,10 +1,12 @@
-import { SlashCommandBuilder } from "discord.js";
+const { SlashCommandBuilder } = require("discord.js");
 
-export const cooldown = 5;
-export const data = new SlashCommandBuilder()
-	.setName("ping")
-	.setDescription("Replies with Pong!");
-
-export async function execute(interaction) {
-	await interaction.reply("Pong!");
-}
+module.exports = {
+	cooldown: 5,
+	category: "fun",
+	data: new SlashCommandBuilder()
+		.setName("ping")
+		.setDescription("Replies with Pong!"),
+	async execute(interaction) {
+		await interaction.reply("Pong!");
+	},
+};
